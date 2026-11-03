@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nataliya Toumarkin — Product Designer &amp; Web Developer</title>
+  <meta name="description" content="Nataliya: дизайн и код. Порядок, который ломается, и правила, которые я пишу сама.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 3D-сцена: грид, фигура, обломки. Рисуется в js/world.js и js/figure.js -->
+  <canvas id="gl" aria-label="Перспективный грид, который разрушается при прокрутке, и фигура в центре"></canvas>
+
+  <!-- Интерфейс поверх сцены -->
+  <header class="hud top">
+    <span>Nataliya Toumarkin</span>
+    <span>scroll</span>
+  </header>
+
+  <ol class="hud rail" id="rail" aria-label="Этапы">
+    <li class="on">Order</li><li>Descent</li><li>Distortion</li><li>Break</li><li>Fragments</li><li>Own rules</li>
+  </ol>
+
+  <div class="hud caption" aria-live="polite">
+    <div class="num" id="num">01</div>
+    <div class="label" id="label">Order</div>
+    <p class="desc" id="desc"></p>
+  </div>
+
+  <div class="hud hint" id="hint">прокрутите ↓</div>
+
+  <!-- Высота этого блока задаёт длину прокрутки (css: #scroll-track) -->
+  <div id="scroll-track"></div>
+
+
+  <div id="err" hidden>WebGL недоступен в этом браузере, поэтому сцена не загрузилась.</div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+{
+  "_comment": "Measurements in drawing pixels. Poses share one canvas, aligned on belt + jeans hem. pose 'neck' = where the face's neck sits on that pose. face 'neck' = bottom-centre of the neck inside the face image.",
+  "pose": {
+    "width": 1292,
+    "height": 1246,
+    "sole": 1241,
+    "figureHeight": 1255.4
+  },
+  "poses": {
+    "down": {
+      "src": "assets/figure/poses/down.webp",
+      "neck": [
+        652.5,
+        307.0
+      ]
+    },
+    "balance": {
+      "src": "assets/figure/poses/balance.webp",
+      "neck": [
+        646.7,
+        289.3
+      ]
+    },
+    "tpose": {
+      "src": "assets/figure/poses/tpose.webp",
+      "neck": [
+        649.4,
+        303.2
+      ]
+    },
+    "up": {
+      "src": "assets/figure/poses/up.webp",
+      "neck": [
+        648.3,
+        290.8
+      ]
+    },
+    "reach": {
+      "src": "assets/figure/poses/reach.webp",
+      "neck": [
+        640.7,
+        292.4
+      ]
+    },
+    "wave": {
+      "src": "assets/figure/poses/wave.webp",
+      "neck": [
+        644.8,
+        296.5
+      ]
+    }
+  },
+  "faceScale": 0.8829,
+  "faces": [
+    {
+      "src": "assets/figure/faces/face-1.webp",
+      "width": 310,
+      "height": 400,
+      "neck": [
+        168.0,
+        344.0
+      ]
+    },
+    {
+      "src": "assets/figure/faces/face-2.webp",
+      "width": 309,
+      "height": 399,
+      "neck": [
+        167.5,
+        343.0
+      ]
+    },
+    {
+      "src": "assets/figure/faces/face-3.webp",
+      "width": 313,
+      "height": 399,
+      "neck": [
+        170.5,
+        343.0
+      ]
+    },
+    {
+      "src": "assets/figure/faces/face-4.webp",
+      "width": 307,
+      "height": 398,
+      "neck": [
+        163.5,
+        341.0
+      ]
+    },
+    {
+      "src": "assets/figure/faces/face-5.webp",
+      "width": 309,
+      "height": 398,
+      "neck": [
+        167.5,
+        341.0
+      ]
+    },
+    {
+      "src": "assets/figure/faces/face-6.webp",
+      "width": 314,
+      "height": 398,
+      "neck": [
+        171.5,
+        340.0
+      ]
+    },
+    {
+      "src": "assets/figure/faces/face-7.webp",
+      "width": 329,
+      "height": 386,
+      "neck": [
+        183.0,
+        327.0
+      ]
+    },
+    {
+      "src": "assets/figure/faces/face-8.webp",
+      "width": 322,
+      "height": 387,
+      "neck": [
+        176.0,
+        328.0
+      ]
+    },
+    {
+      "src": "assets/figure/faces/face-9.webp",
+      "width": 324,
+      "height": 395,
+      "neck": [
+        173.0,
+        336.0
+      ]
+    }
+  ]
+}

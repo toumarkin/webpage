@@ -1,0 +1,84 @@
+/* Макет: 3D-сцена закреплена на весь экран, интерфейс в швейцарском духе поверх неё
+   (шкала этапов справа, номер кадра внизу слева). Прокрутка = одна шкала времени 0→1. */
+:root {
+  --paper: #fafaf7;
+  --ink: #16171a;
+  --ink-soft: #5d5f66;
+  --rule: #d9d8d2;
+  --copper: #c56a3d;
+  --denim: #7fa6d6;
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --gutter: max(20px, env(safe-area-inset-left, 0px));
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); }
+body { font-family: var(--font-display); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+#gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+
+/* Длина прокрутки сцены. Больше vh — медленнее разрушение. */
+#scroll-track { height: 640vh; }
+
+/* ---------- HUD ---------- */
+.hud { position: fixed; z-index: 2; pointer-events: none; transition: opacity .4s; }
+body.past-scene .hud { opacity: 0; }
+
+.top {
+  top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; gap: 16px;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) var(--gutter) 0;
+  font: 500 11px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase;
+}
+.top span:last-child { color: var(--ink-soft); }
+
+.caption {
+  left: var(--gutter);
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  max-width: min(360px, calc(100vw - 40px));
+}
+.num { font: 400 clamp(40px, 7vw, 72px)/.9 var(--font-mono); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.label { margin-top: 10px; font: 700 13px/1 var(--font-display); letter-spacing: .32em; text-transform: uppercase; }
+.desc {
+  margin: 12px 0 0; padding: 6px 8px 6px 0;
+  font: 400 14px/1.5 var(--font-display); color: var(--ink-soft);
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+}
+
+.rail {
+  right: var(--gutter); top: 50%; transform: translateY(-50%);
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 14px;
+  font: 500 10px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase;
+}
+.rail li { display: grid; grid-template-columns: 22px 1fr; align-items: center; gap: 8px; color: var(--ink-soft); transition: color .3s; }
+.rail li::before { content: ""; height: 1px; background: var(--rule); transform-origin: left; transform: scaleX(.5); transition: background .3s, transform .3s; }
+.rail li.on { color: var(--ink); }
+.rail li.on::before { background: var(--ink); transform: scaleX(1); }
+
+.hint {
+  left: 50%; transform: translateX(-50%);
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  font: 500 10px/1 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft);
+}
+
+/* ---------- После сцены: текст позиции ---------- */
+.after {
+  position: relative; z-index: 3;
+  background: var(--paper);
+  padding: 18vh var(--gutter) 20vh;
+  min-height: 100vh;
+}
+.after > * { max-width: 40rem; margin-left: auto; margin-right: auto; }
+.after h1 { font: 700 clamp(32px, 5vw, 56px)/1.05 var(--font-display); letter-spacing: -.01em; text-wrap: balance; margin: 0 auto 32px; }
+.after p { font: 400 18px/1.6 var(--font-display); margin: 0 auto 1em; }
+
+#err { position: fixed; inset: 0; z-index: 4; display: grid; place-items: center; text-align: center; padding: 24px; background: var(--paper); font: 400 15px/1.5 var(--font-display); }
+#err[hidden] { display: none; }
+
+@media (max-width: 640px) {
+  .rail { display: none; }
+  .hint { left: auto; right: var(--gutter); transform: none; }
+  .desc { font-size: 13px; }
+}
