@@ -23,18 +23,27 @@ export const FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 const NAME = { size: 200, weight: 700, lh: 0.96, track: -0.025 };
 const BODY = { size: 72, weight: 400, lh: 1.2 };
 export const WALL_TEXT = [
-  { // имя и роль — задняя стена, слева от фигуры
+  { // имя — задняя стена, слева от фигуры
     lines: [
       { ...NAME, text: 'Nataliya' },
       { ...NAME, text: 'Toumarkin' },
-      { ...BODY, text: 'Product Designer', gap: 70 },
-      { ...BODY, text: '& Web Developer' },
     ],
     width: 4.2,
-    wall: [-2.5, 2.1, -9.85], wallRot: [0, 0, 0],
+    wall: [-1.98, 2.62, -9.85], wallRot: [0, 0, 0],
     fly: [-2.8, 3.0, -5.5], flyRot: [0.2, 0.5, -0.15],
-    final: [-2.9, 2.2, -1.6], finalRot: [0, 0.3, -0.04], finalScale: 0.62,
+    final: [-2.9, 2.52, -1.6], finalRot: [0, 0.3, -0.04], finalScale: 0.62,
     breakAt: 0.56,
+  },
+  { // роль — задняя стена, под именем
+    lines: [
+      { ...BODY, text: 'Product Designer' },
+      { ...BODY, text: '& Web Developer' },
+    ],
+    width: 2.52,
+    wall: [-2.79, 1.25, -9.85], wallRot: [0, 0, 0],
+    fly: [-3.4, 1.4, -6.2], flyRot: [-0.15, 0.6, 0.1],
+    final: [-3.4, 1.6, -1.45], finalRot: [0, 0.3, -0.04], finalScale: 0.62,
+    breakAt: 0.58,
   },
   { // слоган — левая стена
     lines: [
@@ -43,7 +52,7 @@ export const WALL_TEXT = [
       { ...BODY, text: 'experiences.' },
     ],
     width: 2.3,
-    wall: [-4.9, 1.6, -1.7], wallRot: [0, Math.PI / 2, 0],
+    wall: [-4.9, 1.38, -0.93], wallRot: [0, Math.PI / 2, 0],
     fly: [-4.2, 0.4, -2.8], flyRot: [0.3, 0.9, 0.2],
     final: [-3.3, 0.05, 0.8], finalRot: [0, 0.4, 0.04], finalScale: 0.8,
     breakAt: 0.48,
@@ -54,7 +63,7 @@ export const WALL_TEXT = [
       { ...BODY, text: 'toumarkinn@gmail.com', gap: 6 },
     ],
     width: 2.6,
-    wall: [4.9, 0.6, -1.2], wallRot: [0, -Math.PI / 2, 0],
+    wall: [4.9, 1.19, -2.57], wallRot: [0, -Math.PI / 2, 0],
     fly: [4.2, -0.8, -2.6], flyRot: [-0.2, -0.9, -0.1],
     final: [3.1, 1.3, -0.6], finalRot: [0, -0.4, -0.03], finalScale: 0.8,
     breakAt: 0.5,

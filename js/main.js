@@ -39,8 +39,19 @@ addEventListener('scroll', readScroll, { passive: true });
 let lastInput = 0;
 function wake() { lastInput = performance.now(); }
 
-let mx = 0, my = 0;   // лёгкий параллакс от мыши
-addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; wake(); }, { passive: true });
+// Режим редактирования: откройте страницу с ?edit в адресе (index.html?edit)
+const EDIT = new URLSearchParams(location.search).has('edit');
+
+let mx = 0, my = 0;   // лёгкий параллакс от мыши (в режиме редактирования выключен)
+addEventListener('pointermove', (e) => {
+  if (!EDIT) { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; }
+  wake();
+}, { passive: true });
+
+if (EDIT) {
+  const { createEditor } = await import('./editor.js');
+  createEditor({ canvas, camera, labels: world.labels, layout: world.layout, getProg: () => prog, wake });
+}
 
 function resize() {
   const w = innerWidth, h = innerHeight;

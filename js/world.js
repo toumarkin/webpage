@@ -202,19 +202,28 @@ export function createWorld(scene) {
     const t = new THREE.CanvasTexture(c); t.anisotropy = 8;
     return { tex: t, aspect: c.width / c.height };
   }
+  // (пере)рисовать текст надписи по её cfg — нужно и при старте, и редактору
+  function layout(label) {
+    const { tex, aspect } = textTexture(label.cfg.lines);
+    const old = label.mesh.material.uniforms.uMap.value;
+    label.mesh.material.uniforms.uMap.value = tex; if (old) old.dispose();
+    label.mesh.geometry.dispose();
+    label.mesh.geometry = new THREE.PlaneGeometry(label.cfg.width, label.cfg.width / aspect, 12, 6);
+    label.aspect = aspect;
+  }
   const labels = WALL_TEXT.map((L) => {
     const [m] = mats(); m.uniforms.uUseMap.value = 1; m.uniforms.uInkMap.value = 1;
     m.depthTest = false; m.depthWrite = false;   // текст всегда читается поверх обломков…
-    const { tex, aspect } = textTexture(L.lines);
-    m.uniforms.uMap.value = tex;
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(L.width, L.width / aspect, 12, 6), m);
+    const mesh = new THREE.Mesh(new THREE.BufferGeometry(), m);
     mesh.renderOrder = 140;   // …но под фигурой (у неё 150+)
     scene.add(mesh);
     const V = (a) => new THREE.Vector3(...a);
-    return {
-      mesh, bs: L.breakAt, so: L.finalScale,
+    const label = {
+      cfg: L, mesh, bs: L.breakAt, so: L.finalScale,
       P0: V(L.wall), Q0: E(...L.wallRot), Pb: V(L.fly), Qb: E(...L.flyRot), Po: V(L.final), Qo: E(...L.finalRot),
     };
+    layout(label);
+    return label;
   });
 
   /* ---------- записки / сканы ----------
@@ -304,5 +313,5 @@ export function createWorld(scene) {
     });
   }
 
-  return { update };
+  return { update, labels, layout };
 }
