@@ -1,7 +1,27 @@
 # Локальная разработка в MAMP: браузер каждый раз сверяет файлы с сервером,
 # поэтому правки в js/css видны сразу после обычного обновления страницы.
 <IfModule mod_headers.c>
-  <FilesMatch "\.(html|js|css|json)$">
+  <FilesMatch "\.(html|js|css|json|jpg|jpeg|png|webp|gif)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
+</IfModule>
+
+# ---------- Безопасность ----------
+# Не показывать список файлов в папках
+Options -Indexes
+
+# Служебное не отдаём: git, исходники и скрипты подготовки, README, системные файлы
+RedirectMatch 404 /\.git(/|$)
+RedirectMatch 404 /(process|tools)(/|$)
+<FilesMatch "(^\.|\.(md|py|pyc|sh|log)$)">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  # Скрипты только свои; стили и шрифты — свои и Google Fonts; страницу нельзя встроить в чужой сайт
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
 </IfModule>

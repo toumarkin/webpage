@@ -100,7 +100,7 @@ export function createEditor({ canvas, camera, labels, layout, getProg, wake }) 
   function pick(e) {
     ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
     ray.setFromCamera(ndc, camera);
-    const h = ray.intersectObjects(labels.map((L) => L.mesh), false)[0];
+    const h = ray.intersectObjects(labels.filter((L) => L.mesh.visible).map((L) => L.mesh), false)[0];
     return h ? { L: labels.find((L) => L.mesh === h.object), point: h.point } : null;
   }
 

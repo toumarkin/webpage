@@ -1,42 +1,83 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Nataliya Toumarkin — Product Designer &amp; Web Developer</title>
-  <meta name="description" content="Nataliya: дизайн и код. Порядок, который ломается, и правила, которые я пишу сама.">
+  <title>Nataliya Toumarkin - Product Designer &amp; Web Developer</title>
+  <meta name="description" content="Nataliya Toumarkin — Product Designer &amp; Web Developer. Order that breaks, and rules I write myself.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Spectral:ital,wght@0,400;1,400&family=Hanken+Grotesk:wght@400;600&family=Space+Mono&family=JetBrains+Mono:wght@400;500&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <!-- 3D-сцена: грид, фигура, обломки. Рисуется в js/world.js и js/figure.js -->
-  <canvas id="gl" aria-label="Перспективный грид, который разрушается при прокрутке, и фигура в центре"></canvas>
+  <canvas id="gl" aria-label="A perspective grid that breaks apart as you scroll, with a figure in the middle"></canvas>
 
   <!-- Интерфейс поверх сцены -->
   <header class="hud top">
     <span>Nataliya Toumarkin</span>
-    <span>scroll</span>
   </header>
 
-  <ol class="hud rail" id="rail" aria-label="Этапы">
-    <li class="on">Order</li><li>Descent</li><li>Distortion</li><li>Break</li><li>Fragments</li><li>Own rules</li>
+  <ol class="hud rail" id="rail" aria-label="Chapters">
+    <li class="on" data-k="0">Order</li><li data-k="1">University</li><li data-k="2">Politics</li><li data-k="4">Aliyah</li><li data-k="5">Tools</li><li data-k="7">Projects</li>
   </ol>
 
-  <div class="hud caption" aria-live="polite">
-    <div class="num" id="num">01</div>
+  <div class="hud caption is-off" aria-live="polite">
+    <div class="num long" id="num">Present</div>
     <div class="label" id="label">Order</div>
-    <p class="desc" id="desc"></p>
+    <p class="note" id="note" hidden></p>
   </div>
 
-  <div class="hud hint" id="hint">прокрутите ↓</div>
+  <!-- Раздел работ открыт: название и возврат к разделам (js/main.js) -->
+  <div class="work-bar"><button id="work-back" type="button">← All work</button><span id="work-cat"></span></div>
+
+  <div class="hud hint" id="hint">scroll ↓</div>
 
   <!-- Высота этого блока задаёт длину прокрутки (css: #scroll-track) -->
   <div id="scroll-track"></div>
 
+  <!-- Телефон: после сцены — обычная страница с разделами и проектами (собирается в js/main.js) -->
+  <section class="m-work" id="m-work" aria-labelledby="m-work-title">
+    <div class="m-intro">
+      <h1>Nataliya Toumarkin</h1>
+      <p class="m-role">Product Designer &amp; Web Developer</p>
+      <p class="m-tag">Turning ideas into meaningful digital experiences.</p>
+      <p class="m-contact">Ramat Gan, Israel · <a href="mailto:toumarkinn@gmail.com">toumarkinn@gmail.com</a></p>
+    </div>
+    <h2 class="m-title" id="m-work-title">Selected study projects</h2>
+    <nav class="m-cats" id="m-cats" aria-label="Sections"></nav>
+    <ul class="m-list" id="m-list"></ul>
+  </section>
 
-  <div id="err" hidden>WebGL недоступен в этом браузере, поэтому сцена не загрузилась.</div>
+
+  <!-- Окно проекта: открывается кликом по работе (js/main.js), тексты — DESIGN_PROJECTS в js/config.js -->
+  <dialog id="project" class="project" aria-labelledby="pj-title">
+    <button class="pj-close" type="button" aria-label="Close"></button>
+    <header class="pj-hero" id="pj-hero">
+      <p class="pj-crumb">Nataliya Toumarkin / Selected work</p>
+      <div class="pj-hero-img"><img id="pj-img" alt=""></div>
+      <div class="pj-hero-title">
+        <p class="pj-kind" id="pj-kind"></p>
+        <h2 id="pj-title"></h2>
+        <p class="pj-place" id="pj-place"></p>
+      </div>
+      <svg class="pj-wire" id="pj-wire" aria-hidden="true"></svg>
+      <a class="pj-scroll" href="#pj-concept">Scroll to explore ↓</a>
+    </header>
+    <section class="pj-concept" id="pj-concept">
+      <div class="pj-concept-label"><b>The concept</b><span id="pj-count"></span></div>
+      <div class="pj-concept-body">
+        <h3 id="pj-headline"></h3>
+        <p id="pj-lede"></p>
+        <a class="pj-live" id="pj-live" target="_blank" rel="noopener" hidden></a>
+        <nav class="pj-chapters" id="pj-chapters" aria-label="Chapters"></nav>
+      </div>
+    </section>
+    <div class="pj-body"><div class="pj-case" id="pj-case"></div></div>
+  </dialog>
+
+  <div id="err" hidden>WebGL is not available in this browser, so the scene could not load.</div>
 
   <script type="module" src="js/main.js"></script>
 </body>
