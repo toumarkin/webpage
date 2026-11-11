@@ -116,7 +116,9 @@ function fitTitle() {
   let size = parseFloat(getComputedStyle(h).fontSize) * (h.dataset.scale || 1);   // titleScale — заголовок мельче
   h.style.fontSize = `${size}px`;
   const widest = () => Math.max(...[...h.children].map((s) => s.scrollWidth));
-  while (size > 28 && widest() > h.clientWidth) { size *= 0.94; h.style.fontSize = `${size}px`; }
+  const col = h.parentElement;   // колонка заголовка: в широком окне её высота = высоте фото, текст не должен вылезать
+  const tooTall = () => col.scrollHeight > col.clientHeight + 1;
+  while (size > 28 && (widest() > h.clientWidth || tooTall())) { size *= 0.94; h.style.fontSize = `${size}px`; }
 }
 addEventListener('resize', () => { if (dlg.open) { fitTitle(); drawWire(document.getElementById('pj-hero').classList.contains('has-wire')); } });
 
@@ -285,9 +287,13 @@ function resize() {
   const w = innerWidth, h = innerHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
-  camera.fov = camera.aspect >= 1.2 ? 50 : Math.min(78, 50 + (1.2 - camera.aspect) * 36);   // шире угол на телефоне
+  const phone = w / h < 1 && w < 1100;   // вертикальный экран (телефон, планшет): разделы и проекты — страницей под сценой
+  // Сцена собрана под экран 16:10. На более узком (квадратнее) экране держим ширину обзора как там,
+  // иначе имя на стене и доски разделов уходят за края. На телефоне — прежнее мягкое расширение.
+  const REF = 1.6, tan25 = Math.tan(THREE.MathUtils.degToRad(25));
+  camera.fov = phone ? Math.min(78, 50 + Math.max(0, 1.2 - camera.aspect) * 36)
+    : camera.aspect >= REF ? 50 : THREE.MathUtils.radToDeg(2 * Math.atan(tan25 * REF / camera.aspect));
   camera.updateProjectionMatrix();
-  const phone = w < 760 && w / h < 1;   // узкий вертикальный экран
   document.body.classList.toggle('is-phone', phone); world.setPhone(phone);
   wake();
 }

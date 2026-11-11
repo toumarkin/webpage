@@ -95,6 +95,10 @@ body.is-phone .work-bar { display: none; }
 }
 .m-cat[aria-pressed="true"] { background: var(--c-bg, var(--ink)); color: var(--c-ink, var(--paper)); }
 .m-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+@media (min-width: 600px) {   /* вертикальный планшет: шире поля и две колонки карточек */
+  body.is-phone .m-work { padding-left: 40px; padding-right: 40px; }
+  body.is-phone .m-list { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+}
 .m-card { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; text-align: left; cursor: pointer; font: inherit; }
 .m-cover { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .45); }
 .m-name { display: block; margin-top: 10px; font: 700 17px/1.25 var(--font-display); }
@@ -161,6 +165,9 @@ html.modal-open, html.modal-open body { overflow: hidden; }
 .pj-hero.is-full .pj-hero-img img { object-position: left center; }
 .pj-hero.is-full::after { display: none; }   /* линия уже есть на фото */
 .pj-hero.is-full .pj-hero-title { grid-column: 2; position: relative; z-index: 2; }
+/* блок всегда в пропорциях картинки: фото не обрезается, и колонка заголовка остаётся на пустом месте фото */
+.pj-hero.is-full { aspect-ratio: var(--hr, 2); min-height: 0; grid-template-rows: 100%; }
+.pj-hero.is-full .pj-hero-title { padding-top: clamp(56px, 7vw, 84px); padding-bottom: clamp(64px, 7.5vw, 90px); }
 .pj-scroll { position: absolute; right: 32px; bottom: 54px; z-index: 2; color: inherit; text-decoration: none;
   font: 500 11px/1 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; }
 
@@ -182,17 +189,24 @@ html.modal-open, html.modal-open body { overflow: hidden; }
 .pj-body { padding: 0 64px 56px; }
 .pj-case .cs-h { scroll-margin-top: 20px; }
 .pj-case > :first-child { margin-top: 8px; }
-@media (max-width: 760px) {
-  /* телефон: картинка целиком сверху, заголовок под ней (не поверх рисунка) */
-  .pj-hero { grid-template-columns: 1fr !important; min-height: 0; }
+@media (max-width: 980px) {
+  /* планшет и телефон: колонка заголовка рядом с фото слишком узкая —
+     картинка целиком сверху, заголовок под ней (не поверх рисунка) */
+  .pj-hero, .pj-hero.is-full { grid-template-columns: 1fr !important; grid-template-rows: auto; min-height: 0; aspect-ratio: auto; }
   .pj-hero-img { aspect-ratio: 4 / 3; }
   .pj-hero.is-full .pj-hero-img { position: relative; inset: auto; aspect-ratio: var(--hr, 2); }
   .pj-hero.is-full .pj-hero-title { grid-column: 1; }
-  .pj-hero-title { padding: 22px 20px 30px; }
-  .pj-hero-title h2 { font-size: clamp(44px, 14vw, 64px); }
+  .pj-hero-title, .pj-hero.is-full .pj-hero-title { padding: 26px 32px 64px; }
+  .pj-hero-title h2 { font-size: clamp(44px, 9vw, 84px); }
   .pj-hero.has-wire .pj-wire { display: none; }
   .pj-hero.has-wire::after { display: block; }
   .pj-crumb, .pj-scroll { display: none; }
+  .pj-concept { grid-template-columns: 180px minmax(0, 1fr); gap: 24px; padding: 44px 40px 32px; }
+  .pj-body { padding: 0 40px 48px; }
+}
+@media (max-width: 760px) {
+  .pj-hero-title, .pj-hero.is-full .pj-hero-title { padding: 22px 20px 30px; }
+  .pj-hero-title h2 { font-size: clamp(44px, 14vw, 64px); }
   .pj-concept { grid-template-columns: 1fr; gap: 16px; padding: 32px 20px 24px; }
   .pj-body { padding: 0 20px 36px; }
 }
